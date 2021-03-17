@@ -52,8 +52,8 @@ public class Util {
                 }
             }
         } else {
-            dns1 = jni_getprop("net.dns1");
-            dns2 = jni_getprop("net.dns2");
+//            dns1 = jni_getprop("net.dns1");
+//            dns2 = jni_getprop("net.dns2");
         }
 
         List<String> listDns = new ArrayList<>();

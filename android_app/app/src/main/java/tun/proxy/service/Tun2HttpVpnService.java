@@ -90,13 +90,13 @@ public class Tun2HttpVpnService extends VpnService {
             if (vpn == null)
                 throw new IllegalStateException(getString((R.string.msg_start_failed)));
 
-            startNative(vpn);
+//            startNative(vpn);
         }
     }
 
     private void stop() {
         if (vpn != null) {
-            stopNative(vpn);
+//            stopNative(vpn);
             stopVPN(vpn);
             vpn = null;
         }
@@ -137,39 +137,39 @@ public class Tun2HttpVpnService extends VpnService {
         String vpn6 = prefs.getString("vpn6", "fd00:1:fd00:1:fd00:1:fd00:1");
         builder.addAddress(vpn6, 128);
 
-        builder.addRoute("0.0.0.0", 0);
-        builder.addRoute("0:0:0:0:0:0:0:0", 0);
+//        builder.addRoute("0.0.0.0", 0);
+//        builder.addRoute("0:0:0:0:0:0:0:0", 0);
 
-        List<String> dnsList = Util.getDefaultDNS(MyApplication.getInstance().getApplicationContext());
-        for (String dns : dnsList) {
-            Log.i(TAG, "default DNS:" + dns);
-            builder.addDnsServer(dns);
-        }
+//        List<String> dnsList = Util.getDefaultDNS(MyApplication.getInstance().getApplicationContext());
+//        for (String dns : dnsList) {
+//            Log.i(TAG, "default DNS:" + dns);
+//            builder.addDnsServer(dns);
+//        }
 
         // MTU
-        int mtu = jni_get_mtu();
-        Log.i(TAG, "MTU=" + mtu);
-        builder.setMtu(mtu);
+//        int mtu = jni_get_mtu();
+//        Log.i(TAG, "MTU=" + mtu);
+//        builder.setMtu(mtu);
 
         // AAdd list of allowed and disallowed applications
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            MyApplication app = (MyApplication) this.getApplication();
-            if (app.loadVPNMode() == MyApplication.VPNMode.DISALLOW) {
-                Set<String> disallow = app.loadVPNApplication(MyApplication.VPNMode.DISALLOW);
-                Log.d(TAG, "disallowed:" + disallow.size());
-                List<String> notFoundPackageList = new ArrayList<>();
-                builder.addDisallowedApplication(Arrays.asList(disallow.toArray(new String[0])), notFoundPackageList);
-                disallow.removeAll(notFoundPackageList);
-                MyApplication.getInstance().storeVPNApplication(MyApplication.VPNMode.DISALLOW, disallow);
-            } else {
-                Set<String> allow = app.loadVPNApplication(MyApplication.VPNMode.ALLOW);
-                Log.d(TAG, "allowed:" + allow.size());
-                List<String> notFoundPackageList = new ArrayList<>();
-                builder.addAllowedApplication(Arrays.asList(allow.toArray(new String[0])), notFoundPackageList);
-                allow.removeAll(notFoundPackageList);
-                MyApplication.getInstance().storeVPNApplication(MyApplication.VPNMode.ALLOW, allow);
-            }
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            MyApplication app = (MyApplication) this.getApplication();
+//            if (app.loadVPNMode() == MyApplication.VPNMode.DISALLOW) {
+//                Set<String> disallow = app.loadVPNApplication(MyApplication.VPNMode.DISALLOW);
+//                Log.d(TAG, "disallowed:" + disallow.size());
+//                List<String> notFoundPackageList = new ArrayList<>();
+//                builder.addDisallowedApplication(Arrays.asList(disallow.toArray(new String[0])), notFoundPackageList);
+//                disallow.removeAll(notFoundPackageList);
+//                MyApplication.getInstance().storeVPNApplication(MyApplication.VPNMode.DISALLOW, disallow);
+//            } else {
+//                Set<String> allow = app.loadVPNApplication(MyApplication.VPNMode.ALLOW);
+//                Log.d(TAG, "allowed:" + allow.size());
+//                List<String> notFoundPackageList = new ArrayList<>();
+//                builder.addAllowedApplication(Arrays.asList(allow.toArray(new String[0])), notFoundPackageList);
+//                allow.removeAll(notFoundPackageList);
+//                MyApplication.getInstance().storeVPNApplication(MyApplication.VPNMode.ALLOW, allow);
+//            }
+//        }
 
         // Add list of allowed applications
         return builder;
@@ -233,7 +233,7 @@ public class Tun2HttpVpnService extends VpnService {
     @Override
     public void onCreate() {
         // Native init
-        jni_init();
+//        jni_init();
         super.onCreate();
 
     }
@@ -261,7 +261,7 @@ public class Tun2HttpVpnService extends VpnService {
 
         try {
             if (vpn != null) {
-                stopNative(vpn);
+//                stopNative(vpn);
                 stopVPN(vpn);
                 vpn = null;
             }
@@ -269,7 +269,7 @@ public class Tun2HttpVpnService extends VpnService {
             Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex));
         }
 
-        jni_done();
+//        jni_done();
 
         super.onDestroy();
     }
